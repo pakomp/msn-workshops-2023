@@ -2,6 +2,7 @@
 <Intro>
 Hur man skapar en docker image: Dockerfile
 
+https://github.com/techno-tim/launchpad/tree/master/docker/custom-image
 [![Dockerfile](https://user-images.githubusercontent.com/4668945/234217051-71d114c3-ead4-4945-9ee4-ca14c941571a.png)](https://www.youtube.com/watch?v=SnSH8Ht3MIc "Dockerfile")
 
 Användbara kommandon WORKDIR/COPY/RUN/USER
