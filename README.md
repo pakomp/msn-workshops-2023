@@ -1,4 +1,8 @@
-# workshops-2023-docker
+# msn-workshops-2023
+
+* [docker](docs\docker.html)
+
+
 <Intro>
 Hur man skapar en docker image: Dockerfile
 

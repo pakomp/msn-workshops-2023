@@ -1,0 +1,23 @@
+services:
+  webserver:
+    build:
+      context: ../custom-container
+    image: msn-compose:latest
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./websites:/usr/share/nginx/html
+    depends_on:
+      - db
+    links:
+      - db
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=helloworld
+    restart: always
+    volumes:
+      - db_vol:/var/lib/mysql
+volumes:
+  db_vol:
