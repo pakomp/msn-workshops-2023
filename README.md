@@ -2,3 +2,4 @@
 
 * [docker](docs/docker.html)
 
+* [k8s](docs/k8s.html)

@@ -1,0 +1,1 @@
+docker run --rm --name kompose -v ${PWD}:/src -it femtopixel/kompose convert -f /src/dctest/docker-compose.yaml -o /src/dctest.yaml

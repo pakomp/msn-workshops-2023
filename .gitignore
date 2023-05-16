@@ -1,0 +1,5 @@
+k8s/bin/.kube
+k8s/bin/k3s.log
+k8s/bin/k3s.yaml
+k8s/bin/.bash_history
+dctest.yaml
