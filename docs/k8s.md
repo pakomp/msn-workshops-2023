@@ -111,6 +111,7 @@ https://github.com/pakomp/msn-workshops-2023
 ### Uppgift 6
 * Installera vår app med en ingress precis som i uppgift 4
     * helm upgrade --install hello-helm hello-chart -f helm-ingress.yaml
+    * om man vill sätta upp ett host entry för sin ip mot "k3s.local" så kan man avkommentera den raden i helm-ingress.yaml och prova att man bara när appen på just den urlen
 * Ändra till en loadbalancer istället som i uppgift 3
     * helm upgrade --install hello-helm hello-chart -f helm-ingress.yaml -f helm-lb.yaml
 
