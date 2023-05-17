@@ -10,7 +10,6 @@ spec:
     - name: "web"
       protocol: TCP
       port: 8080
-      nodePort: 30809
       targetPort: myapp-port
   selector:
     app: myapp

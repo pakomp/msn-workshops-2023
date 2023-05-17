@@ -3,3 +3,7 @@ k8s/bin/k3s.log
 k8s/bin/k3s.yaml
 k8s/bin/.bash_history
 dctest.yaml
+k8s/hello-chart
+k8s/bin/.config
+k8s/bin/.cache
+.gitignore

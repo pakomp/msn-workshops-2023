@@ -5,7 +5,7 @@ backgroundColor: #fff
 theme: gaia
 ---
 
-![bg left:40% 80%](https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Kubernetes_logo_without_workmark.svg/84px-Kubernetes_logo_without_workmark.svg.png)
+![bg left:40% 80%](https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg)
 
 # **Kubernetes**
 
@@ -19,138 +19,112 @@ https://github.com/pakomp/msn-workshops-2023
 
 * Kubernetes
     Vad är kubernetes?
-    https://kubernetes.io/docs/concepts/
 
 * Deployment/Pod
-    Hur man bygger en docker image
+    Hur körs containers i k8s
     
 * Service/Ingress
+    Hur kommer man åt sina containers
 
-* docker-compose
-    Hur man kan paketera flera docker images och deras inställningar
-    till en komplett applikation
-
+* Helm
+    Paketera deployment/service/ingress och samla inställningar på ett ställe
+    
 ---
 # Kubernetes
 <iframe width="1100" height="720px" src="https://www.youtube-nocookie.com//embed/PziYflu8cB8?end=113"></iframe>
+
+---
+# Kubernetes 
+### Uppgift 1
++ Installera k8s kluster
+    * Stäng ner Docker Desktop på windows och se till man är i en wsl prompt
+
+    * Installera k8s dev kluster
+        * k8s/bin/start.sh
+
+---
+# Kubernetes 
+### Uppgift 1
+* Om allt gick bra så borde den säga att "default" är ens kube context och vad ens lastbalanserar ip är
+    * kubectl get deployments -A
+    * kubectl get services -A
 
 ---
 # Deployment/Pod
 <iframe width="1100" height="720px" src="https://www.youtube-nocookie.com/embed/iC-WxZGhFqs?start=0&end=287"></iframe>
 
 ---
+# Deployment/Pod
+    https://kubernetes.io/docs/concepts/
+### Uppgift 2
+* Installera vår docker app som en deployment
+    * kubectl apply -f deployment.yaml
+* Kontrollera att den startat
+* Ändra antalet pods från 3 till 2
+
+---
 # Service/Ingress
 <iframe width="1100" height="720px" src="https://www.youtube-nocookie.com//embed/NPFbYpb0I7w?start=13&end=330"></iframe>
 
-https://youtu.be/NPFbYpb0I7w?t=12
-https://youtu.be/NPFbYpb0I7w?t=330
 ---
-https://www.youtube-nocookie.com/embed/iC-WxZGhFqs?start=0&end=287
-https://youtu.be/iC-WxZGhFqs?t=287
-kubectl port-forward deployment/hello-deployment 8080:80
-# Docker installation
-### Windows
-```
-winget install docker.dockerdesktop
-```
-### Linux
-```
-sudo wget -qO- get.docker.com|bash
-```
-
-# Docker test
-```
-docker run busybox date
-```
----
-# Dockerfile
-* Dockerfile 
-    Hur man bygger en docker image
-    https://docs.docker.com/engine/reference/builder
----
-# Dockerfile
-<iframe width="1100" height="720px" src="https://www.youtube-nocookie.com//embed/SnSH8Ht3MIc?end=1049"></iframe>
+# Service
+### Uppgift 3
+* Installera en service för vår app så vi kan nå den
+    * kubectl apply -f service.yaml
+* Kontrollera att servicen har startat ok
+    * kubectl describe service hello-service
+    * endpoints (hittade pods att skicka trafik till)    
+    * loadbalancer ingress (fått ett externt ip, där porten vi vill ha är ledig)
 
 ---
-# Dockerfile
-### [docker cli](https://docs.technotim.live/posts/custom-docker-image/#docker-commands)
-#### docker build -t msn-image .
-#### docker run -d -p 80:80 --name msn-container --rm msn-image 
-#### docker stop msn-container
----
-# Dockerfile
-### [dockerfile](https://docs.docker.com/engine/reference/builder/)
-### Uppgift 1
-+ Lägg till en ny bild med [ADD](https://docs.docker.com/engine/reference/builder/#add) från https://picsum.photos/200
-+ Lägg till ytterligare en bild via [RUN](https://docs.docker.com/engine/reference/builder/#run) istället
-```
-wget https://picsum.photos/200 -O src/html/pic.png
-curl -sS https://picsum.photos/200 -o src/html/pic.png
-```
-+ Uppdatera index.html så den visar de två nya bilderna
----
-# Dockerfile
-### [dockerfile](https://docs.docker.com/engine/reference/builder/)
-### Uppgift 2
-+ Använd [ARG](https://docs.docker.com/engine/reference/builder/#arg) för att skapa en variabel som kan ersätta storleken på bilden som hämtas från picsum
-```
-ARG size=200
+# Service
+### Uppgift 3
+* Anslut till tjänsten 
+    * kubectl get service hello-service -o json|jq '.status.loadBalancer.ingress[0].ip'
+    * kubectl get service hello-service -o json|jq '.spec.ports[0].port'
 
-```
 ---
-# docker-compose
-* docker-compose
-    Hur man kan paketera flera docker images och deras inställningar
-    till en komplett applikation
-    https://docs.docker.com/compose/compose-file/
----    
-# docker-compose
-<iframe width="1100" height="720px" src="https://www.youtube-nocookie.com//embed/qH4ZKfwbO8w?start=122&end=1084"></iframe>
+# Ingress
+### Uppgift 4
+* Installera en ingress regel för vår app så vi kan nå den via http/https
+    * kubectl apply -f ingress.yaml
+    * kubectl get ingress
+* Efter att man testat så http/https fungerar ändra servicens typ till ClusterIP då vi inte längre behöver en egen port för den på 8080
+    * kontrollera att den inte längre svara på 8080 men fortfarande fungerar på http/https
 
----    
-# docker-compose
-### Uppgift 1
-+ Lägg till en ny [wordpress](https://hub.docker.com/_/wordpress) service som är kopplad till en [mysql](https://hub.docker.com/_/mysql) databas
 ---
-# docker-compose
-#### mysql env
-```
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress
-```
-#### wordpress env
-```
-      - WORDPRESS_DB_HOST=db
-      - WORDPRESS_DB_NAME=wordpress
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
-```
+# Helm
+
 ---
-# docker-compose
-### Uppgift 2
-+ Lägg till ytterligare en webserver liknande servicen som använda vår egna lokala nginx image via [build](https://docs.docker.com/compose/compose-file/build/)
-```
-services:
-  msn-webserver:
-    build:
-```
+# Helm
+### Uppgift 5
+* Rensa de manuellt skapade okjekten
+    * kubectl delete deployment hello-deployment
+    * kubectl delete service hello-service
+    * kubectl delete ingress hello-ingress
+### Uppgift 6
+* Skapa en ny helm chart
+    * helm create hello-chart
+
 ---
-# WK
-### Nu borde ni kunna följa hur laravel sail är uppbyggd i wk-api
-+ [wk-api/docker/8.1/Dockerfile](https://gitlab.com/msn4/wk-api/-/blob/develop/docker/8.1/Dockerfile)
-+ [wk-api/docker-compose.yml](https://gitlab.com/msn4/wk-api/-/blob/develop/docker-compose.yml)
+# Helm
+### Uppgift 6
+* Installera vår app med en ingress precis som i uppgift 4
+    * helm upgrade --install hello-helm hello-chart -f helm-ingress.yaml
+* Ändra till en loadbalancer istället som i uppgift 3
+    * helm upgrade --install hello-helm hello-chart -f helm-ingress.yaml -f helm-lb.yaml
 
-### Eller hur utveckling burkarna för WK2 skapas
-+ [ldocker/php8-wk/Dockerfile](https://gitlab.com/mysalary/docker/ldocker/-/blob/main/php8-wk/Dockerfile)
 ---
-# Extra 
+# Helm
+### Uppgift 6
+* Titta vilka inställningar en chart kör med
+    * helm get values hello-helm
+    * helm get values hello-helm -a
+* Avinstallera vår app
+    * helm uninstall hello-helm
 
-* Ytterligare [dockerfile](https://docs.docker.com/engine/reference/builder/) kommandon WORKDIR/USER/CMD/ENTRYPOINT
-
-* (optional) composerize
-    Omvandla docker cli kommandon till docker-compose yaml syntax
-    <https://www.composerize.com/>
-
-* (advanced) docker [networks](https://www.youtube-nocookie.com//embed/bKFMS5C4CG0?start=149)
-    Skapa olika tycker av nätverk för att separera workload från varandra
+---
+# Extra
+* Titta vad helm create skapade i hello-chart katalogen och hur värden från values.yaml används på olika ställen i templates
+* Titta på hello-chart/values.yaml och hur vi sedan kör overrides på den via helm-ingress.yaml och helml-lb-yaml
+* Skapa en yaml fil som aktiverar autoscaling istället för att ha en fast replicaCount

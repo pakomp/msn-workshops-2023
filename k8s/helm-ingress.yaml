@@ -1,0 +1,10 @@
+image:
+  repository: pakomp/helloapp
+  tag: v1
+ingress:
+  enabled: true
+  hosts:
+    - paths:
+        - path: /
+          pathType: ImplementationSpecific
+#      host: "k3s.local"    

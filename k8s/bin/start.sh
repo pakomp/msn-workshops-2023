@@ -13,8 +13,12 @@ sudo chown $user k3s.yaml
 export KUBECONFIG="$absdir/k3s.yaml"
 export PATH="$absdir:$PATH"
 export HOME="$absdir"
+echo "Installing helm"
 ./get_helm.sh > /dev/null
+echo "Checking current kube context"
 ./kubectx
+echo "Checking loadbalancer ip"
 kubectl get service traefik -n kube-system -o json|jq .status.loadBalancer.ingress[0].ip
 cd ..
-/usr/bin/bash --rcfile <(echo "PS1='\[\033[01;32m\]\u@k3s:\[\033[00m\]\#:\[\033[01;34m\]\w\[\033[00m\]$ '") -i
+echo "Starting k3s shell"
+bash --rcfile <(echo "PS1='\[\033[01;32m\]\u@k3s:\[\033[00m\]\#:\[\033[01;34m\]\w\[\033[00m\]$ '") -i
