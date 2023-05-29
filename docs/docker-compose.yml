@@ -1,0 +1,12 @@
+---
+version: "3.1"
+services:
+  cust-image:
+    container_name: docs
+    image: "europe-north1-docker.pkg.dev/balmy-channel-288211/pakomp/workshop:2023"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    restart: unless-stopped

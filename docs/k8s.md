@@ -94,8 +94,13 @@ https://github.com/pakomp/msn-workshops-2023
 
 ---
 # Helm
-
+<iframe width="1100" height="720px" src="https://www.youtube-nocookie.com//embed/w51lDVuRWuk?end=385"></iframe>
 ---
+
+# Helm
+<iframe width="1100" height="720px" src="https://www.youtube-nocookie.com//embed/w51lDVuRWuk?start=464&end=572"></iframe>
+---
+
 # Helm
 ### Uppgift 5
 * Rensa de manuellt skapade okjekten
